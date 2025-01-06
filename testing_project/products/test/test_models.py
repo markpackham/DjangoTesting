@@ -27,4 +27,6 @@ class ProductModelTest(TestCase):
     def test_negative_stock_count_validation(self):
         self.product.stock_count = -10
         with self.assertRaises(ValidationError):
+            # clean validates objects, it validates the model as a whole
+            # while clean_filed() only targets fields
             self.product.clean()
