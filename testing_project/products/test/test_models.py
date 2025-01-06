@@ -4,8 +4,10 @@ from products.models import Product
 from django.db import IntegrityError
 
 class ProductModelTest(TestCase):
-    def setUp(self):
-        self.product = Product(name='Test Product', price=100, stock_count=10)
+    # Create 1 object for multiple tests that won't change (better for performance)
+    @classmethod
+    def setUpTestData(cls):
+        cls.product = Product(name='Test Product', price=100, stock_count=10)
 
     def test_in_stock_property(self):
         self.assertTrue(self.product.in_stock)

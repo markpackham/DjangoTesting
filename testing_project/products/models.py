@@ -31,6 +31,7 @@ class Product(models.Model):
     def in_stock(self) -> bool:
         return self.stock_count > 0
 
+# Clear lets you catch validation issues early into code before saving to database
     def clean(self):
         if self.price < 0:
             raise ValidationError('Price cannot be negative')
