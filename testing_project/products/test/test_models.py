@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 from products.models import Product
+from django.db import IntegrityError
 
 class ProductModelTest(TestCase):
     def setUp(self):
@@ -30,3 +31,9 @@ class ProductModelTest(TestCase):
             # clean validates objects, it validates the model as a whole
             # while clean_filed() only targets fields
             self.product.clean()
+
+    def test_negative_price_constraint(self):
+        product = Product(name='Negative Price Product', price=-1, stock_count=5)
+
+        with self.assertRaises(IntegrityError):
+            product.save()
