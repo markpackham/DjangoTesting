@@ -37,3 +37,9 @@ class ProductModelTest(TestCase):
 
         with self.assertRaises(IntegrityError):
             product.save()
+
+    def test_negative_stock_count_constraint(self):
+        product = Product(name='Negative Stock Count Product', price=1, stock_count=-1)
+
+        with self.assertRaises(IntegrityError):
+            product.save()
