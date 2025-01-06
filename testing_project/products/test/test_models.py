@@ -23,3 +23,8 @@ class ProductModelTest(TestCase):
         with self.assertRaises(ValidationError):
             # When we expect to raise the validation error
             self.product.clean()
+
+    def test_negative_stock_count_validation(self):
+        self.product.stock_count = -10
+        with self.assertRaises(ValidationError):
+            self.product.clean()
