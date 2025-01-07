@@ -1,4 +1,7 @@
 from django.test import TestCase, SimpleTestCase
+from django.urls import reverse
+from products.models import Product
+
 
 class TestHomePage(SimpleTestCase):
 
@@ -15,3 +18,14 @@ class TestHomePage(SimpleTestCase):
     def test_homepage_contains_welcome_message(self):
         response = self.client.get('/')
         self.assertContains(response, 'Welcome to our Store!')
+
+class TestProductsPage(TestCase):
+    def setUp(self):
+        Product.objects.create(name='Laptop', price=1000, stock_count=5)
+        Product.objects.create(name='Phone', price=800, stock_count=10)
+
+    def test_products_uses_correct_template(self):
+        # Use reverse so we target the NAMED path "products"
+        # that way we aren't tried to a url called "/products/" which may change for SEO reasons
+        response = self.client.get(reverse('products'))
+        self.assertTemplateUsed(response, 'products.html')
