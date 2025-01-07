@@ -37,3 +37,10 @@ class TestProductsPage(TestCase):
         self.assertContains(response, 'Laptop')
         self.assertContains(response, 'Phone')
         self.assertNotContains(response, 'No products available')
+
+    def test_products_view_no_products(self):
+        # Delete all products
+        Product.objects.all().delete()
+        response = self.client.get(reverse('products'))
+        self.assertContains(response, 'No products available')
+        self.assertEqual(len(response.context['products']), 0)
