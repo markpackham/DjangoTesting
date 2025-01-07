@@ -29,3 +29,11 @@ class TestProductsPage(TestCase):
         # that way we aren't tried to a url called "/products/" which may change for SEO reasons
         response = self.client.get(reverse('products'))
         self.assertTemplateUsed(response, 'products.html')
+
+    def test_products_context(self):
+        response = self.client.get(reverse('products'))
+        # Make sure we have the 2 products we created
+        self.assertEqual(len(response.context['products']), 2)
+        self.assertContains(response, 'Laptop')
+        self.assertContains(response, 'Phone')
+        self.assertNotContains(response, 'No products available')
