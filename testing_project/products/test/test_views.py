@@ -8,7 +8,12 @@ class TestProfilePage(TestCase):
         User.objects.create_user(username='testuser', password='password123')
 
          # Log user in
-         self.client.login(username='testuser', password='password123')
+        self.client.login(username='testuser', password='password123')
+        response = self.client.get(reverse('profile'))
+
+        # Check user's username in the response context
+        self.assertContains(response, 'testuser')
+
 
 class TestHomePage(SimpleTestCase):
 
