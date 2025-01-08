@@ -13,6 +13,9 @@ def post(request):
         response.raise_for_status()
         return JsonResponse(response.json())
     except RequestException as e:
+        # Log error
+        return HttpResponse('Service unavailable', status=503)
+
 
 @login_required
 def profile(request):

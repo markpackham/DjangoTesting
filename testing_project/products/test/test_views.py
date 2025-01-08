@@ -1,6 +1,30 @@
+import requests
 from django.test import TestCase, SimpleTestCase
 from django.urls import reverse
+from unittest.mock import patch
 from products.models import Product, User
+
+
+class PostsViewTest(TestCase):
+    @patch('products.views.requests.get')
+    def test_post_view_success(self):
+        mock_get.return_value.status_code = 200
+        return_data = {
+            "userId" : 1,
+            "id": 1,
+            "title": "Test Title",
+            "body": "Test Body"
+        }
+        mock_get.return_value.json.return_value = return_data
+
+        # Send request to the view
+        response = self.client.get(reverse('post'))
+        self.assertEqual(response.status_code, 200)
+        self.asserrtJSONEqual(response.content, return_data)
+
+        # Ensure mock API call was made with the correct Url
+        mock_get.assert_called_once_with('https://jsonplaceholder.typicode.com/posts/1')
+
 
 class TestProfilePage(TestCase):
 
