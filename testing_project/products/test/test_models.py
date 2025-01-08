@@ -16,9 +16,9 @@ class ProductModelTest(TestCase):
         self.assertFalse(self.product.in_stock)
 
     def test_discount_price(self):
-        self.assertEqual(self.product.get_discounted_price(10), 90)
-        self.assertEqual(self.product.get_discounted_price(50), 50)
-        self.assertEqual(self.product.get_discounted_price(0), 100)
+        self.assertEqual(self.product.get_discount_price(10), 90)
+        self.assertEqual(self.product.get_discount_price(50), 50)
+        self.assertEqual(self.product.get_discount_price(0), 100)
 
     # def test_negative_price_validation(self):
     #     self.product.price = -10

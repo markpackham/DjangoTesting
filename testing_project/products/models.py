@@ -1,39 +1,29 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import AbstractUser
 
-# Create your models here.
+
 class User(AbstractUser):
     pass
 
+
 class Product(models.Model):
-    name = models.CharField(max_length=128)
+    # name, price, stock_count
+    name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock_count = models.IntegerField(default=0)
 
     class Meta:
         constraints = [
-            models.CheckConstraint(
-                condition=models.Q(price__gt=0),
-                name='price_gt_0'
-            ),
-            models.CheckConstraint(
-                condition=models.Q(stock_count__gt=0),
-                name='stock_gt_0'
-            )
+            models.CheckConstraint(condition=models.Q(price__gte=0), name='price_gt_0'),
+            models.CheckConstraint(condition=models.Q(stock_count__gte=0), name='stock_gt_0'),
         ]
 
-    def get_discounted_price(self, discount_percentage):
-        """ Calculate & return the discounted price """
+    def get_discount_price(self, discount_percentage):
+        """Calculate and return the discounted price."""
         return self.price * (1 - discount_percentage / 100)
 
     @property
-    def in_stock(self) -> bool:
+    def in_stock(self):
+        """Return True if the product is in stock (i.e., stock_count > 0)."""
         return self.stock_count > 0
-
-# Clear lets you catch validation issues early into code before saving to database
-    def clean(self):
-        if self.price < 0:
-            raise ValidationError('Price cannot be negative')
-        if self.stock_count < 0:
-            raise ValidationError('Stock Count cannot be negative')
