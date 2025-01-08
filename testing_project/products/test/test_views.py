@@ -1,7 +1,14 @@
 from django.test import TestCase, SimpleTestCase
 from django.urls import reverse
-from products.models import Product
+from products.models import Product, User
 
+class TestProfilePage(TestCase):
+     def test_profile_view_accessible_for_authenticated_users(self):
+        # Create test user
+        User.objects.create_user(username='testuser', password='password123')
+
+         # Log user in
+         self.client.login(username='testuser', password='password123')
 
 class TestHomePage(SimpleTestCase):
 
