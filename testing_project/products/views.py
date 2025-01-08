@@ -6,17 +6,6 @@ from products.forms import ProductForm
 import requests
 from requests.exceptions import RequestException
 
-def post(request):
-    try:
-        response = requests.get('https://jsonplaceholder.typicode.com/posts/1')
-        # Return an error if the request fails
-        response.raise_for_status()
-        return JsonResponse(response.json())
-    except RequestException as e:
-        # Log error
-        return HttpResponse('Service unavailable', status=503)
-
-
 @login_required
 def profile(request):
     return render(request, 'profile.html')
@@ -39,3 +28,13 @@ def products(request):
     else:
         context = {'products': Product.objects.all(), 'form': ProductForm()}
         return render(request, 'products.html', context)
+
+def post(request):
+    try:
+        response = requests.get('https://jsonplaceholder.typicode.com/posts/1')
+        # Return an error if the request fails
+        response.raise_for_status()
+        return JsonResponse(response.json())
+    except RequestException as e:
+        # Log error
+        return HttpResponse('Service unavailable', status=503)
