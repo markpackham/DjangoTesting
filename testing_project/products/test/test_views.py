@@ -81,7 +81,7 @@ class PostsViewTest(TestCase):
         # Send request to the view
         response = self.client.get(reverse('post'))
         self.assertEqual(response.status_code, 200)
-        self.asserrtJSONEqual(response.content, return_data)
+        self.assertJSONEqual(response.content, return_data)
 
         # Ensure mock API call was made with the correct Url
         mock_get.assert_called_once_with('https://jsonplaceholder.typicode.com/posts/1')
