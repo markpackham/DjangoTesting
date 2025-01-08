@@ -85,3 +85,15 @@ class PostsViewTest(TestCase):
 
         # Ensure mock API call was made with the correct Url
         mock_get.assert_called_once_with('https://jsonplaceholder.typicode.com/posts/1')
+
+
+        @patch('products.views.requests.get')
+        def test_post_view_fail(self, mock_get):
+            # We want to get a 503 error
+            mock_get.side_effect = requests.exceptions.RequestException
+
+            # Send a request to the view
+            response = self.client.get(reverse('post'))
+
+            self.assertEqual(response.status_code, 503)
+            mock_get.assert_called_once_with('https://jsonplaceholder.typicode.com/posts/1')
