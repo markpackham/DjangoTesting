@@ -9,7 +9,6 @@ class TestProfilePage(TestCase):
         # Check we get redirected to login page
         self.assertRedirects(response, f"{reverse('login')}?next={reverse('profile')}")
 
-
     def test_profile_view_accessible_for_authenticated_users(self):
         # Create test user
 
