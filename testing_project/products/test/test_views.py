@@ -68,7 +68,7 @@ class TestProductsPage(TestCase):
 
 class PostsViewTest(TestCase):
     @patch('products.views.requests.get')
-    def test_post_view_success(self):
+    def test_post_view_success(self, mock_get):
         mock_get.return_value.status_code = 200
         return_data = {
             "userId" : 1,
