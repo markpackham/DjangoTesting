@@ -4,6 +4,7 @@ from django.urls import reverse
 from unittest.mock import patch
 from products.models import Product, User
 
+
 class TestProfilePage(TestCase):
 
     def test_profile_view_redirects_for_anonymous_users(self):
@@ -16,7 +17,7 @@ class TestProfilePage(TestCase):
 
         User.objects.create_user(username='testuser', password='password123')
 
-         # Log user in
+        # Log user in
         self.client.login(username='testuser', password='password123')
         response = self.client.get(reverse('profile'))
 
@@ -26,7 +27,7 @@ class TestProfilePage(TestCase):
 
 class TestHomePage(SimpleTestCase):
 
-# This test is redundant since the others look for an Http 200 by default
+    # This test is redundant since the others look for an Http 200 by default
     # def test_homepage_status_code(self):
     #     response = self.client.get('/')
     #     self.assertEqual(response.status_code, 200)
@@ -35,10 +36,11 @@ class TestHomePage(SimpleTestCase):
         response = self.client.get('/')
         self.assertTemplateUsed(response, 'index.html')
 
-# THIS IS AMAZING - make sure a web page contains a specific message!!!!
+    # THIS IS AMAZING - make sure a web page contains a specific message!!!!
     def test_homepage_contains_welcome_message(self):
         response = self.client.get('/')
         self.assertContains(response, 'Welcome to our Store!')
+
 
 class TestProductsPage(TestCase):
     def setUp(self):
@@ -66,12 +68,13 @@ class TestProductsPage(TestCase):
         self.assertContains(response, 'No products available')
         self.assertEqual(len(response.context['products']), 0)
 
+
 class PostsViewTest(TestCase):
     @patch('products.views.requests.get')
     def test_post_view_success(self, mock_get):
         mock_get.return_value.status_code = 200
         return_data = {
-            "userId" : 1,
+            "userId": 1,
             "id": 1,
             "title": "Test Title",
             "body": "Test Body"
@@ -85,7 +88,6 @@ class PostsViewTest(TestCase):
 
         # Ensure mock API call was made with the correct Url
         mock_get.assert_called_once_with('https://jsonplaceholder.typicode.com/posts/1')
-
 
         @patch('products.views.requests.get')
         def test_post_view_fail(self, mock_get):

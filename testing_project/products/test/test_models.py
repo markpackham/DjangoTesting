@@ -3,6 +3,7 @@ from django.test import TestCase
 from products.models import Product
 from django.db import IntegrityError
 
+
 class ProductModelTest(TestCase):
     # Create 1 object for multiple tests that won't change (better for performance)
     @classmethod

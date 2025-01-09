@@ -2,21 +2,21 @@
 
 {% block content %}
 
-    <h1>View products</h1>
+<h1>View products</h1>
 
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_div }}
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_div }}
 
-        <button type="submit" style="margin: 5px 0">Submit</button>
-    </form>
+    <button type="submit" style="margin: 5px 0">Submit</button>
+</form>
 
-    <hr />
+<hr/>
 
-    {% for product in products %}
-        <p>{{ product.name }}</p>
-    {% empty %}
-        <p>No products available</p>
-    {% endfor %}
+{% for product in products %}
+<p>{{ product.name }}</p>
+{% empty %}
+<p>No products available</p>
+{% endfor %}
 
 {% endblock content %}

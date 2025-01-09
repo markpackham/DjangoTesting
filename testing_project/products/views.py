@@ -6,15 +6,19 @@ from django.http import JsonResponse, HttpResponse
 from products.models import Product
 from products.forms import ProductForm
 
+
 @login_required
 def profile(request):
     return render(request, 'profile.html')
 
+
 def login(request):
     return render(request, 'login.html')
 
+
 def homepage(request):
     return render(request, 'index.html')
+
 
 def products(request):
     if request.method == 'POST':
@@ -28,6 +32,7 @@ def products(request):
     else:
         context = {'products': Product.objects.all(), 'form': ProductForm()}
         return render(request, 'products.html', context)
+
 
 def post(request):
     try:

@@ -1,11 +1,13 @@
 from django.conf import settings
 from django.http import HttpResponse
 
+
 class MaintenanceModeMiddleware:
     """
     Middleware that checks if the site is in maintenance mode.
     If the MAINTENANCE_MODE setting is True, it returns a "Site under maintenance" response.
     """
+
     def __init__(self, get_response):
         self.get_response = get_response
 
