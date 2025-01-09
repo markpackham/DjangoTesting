@@ -12,5 +12,9 @@ class UserSignalsTest(TestCase):
 
         # Check send_mail called once
         mock_send_mail.assert_called_once_with(
-
+            'Welcome!',
+            'Thanks for signing up!',
+            'admin@django.com',  # from-email
+            ['john@email.com'],  # recipient list
+            fail_silently=False,
         )
