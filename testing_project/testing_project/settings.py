@@ -127,4 +127,4 @@ AUTH_USER_MODEL = 'products.User'
 LOGIN_URL = '/login/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-MAINTENANCE_MODE = True
+MAINTENANCE_MODE = False
