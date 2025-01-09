@@ -18,3 +18,15 @@ class UserSignalsTest(TestCase):
             ['john@email.com'],  # recipient list
             fail_silently=False,
         )
+
+    # Check no email sent when user updated
+    @patch('products.signals.send_mail')
+    def test_no_email_sent_on_user_update(self, mock_send_mail):
+        user = User.objects.create_user(username='john', email='john@email.com', password='password123')
+
+        # Reset mock call count to zero
+        mock_send_mail.reset_mock()
+        user.email = 'johnCHANGED@email.com'
+        user.save()
+
+        mock_send_mail.assert_not_called()
