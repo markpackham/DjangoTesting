@@ -6,7 +6,7 @@ from products.models import Product, User
 
 
 class TestProfilePage(TestCase):
-    
+
     # We can use tags to target specific tests that we want to run eg only "auth" tagged
     # python manage.py test --settings=testing_project.test_settings --tag=auth
     # this is a cool performance improvement
