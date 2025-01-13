@@ -1,17 +1,22 @@
 import requests
-from django.test import TestCase, SimpleTestCase
+from django.test import TestCase, SimpleTestCase, tag
 from django.urls import reverse
 from unittest.mock import patch
 from products.models import Product, User
 
 
 class TestProfilePage(TestCase):
-
+    
+    # We can use tags to target specific tests that we want to run eg only "auth" tagged
+    # python manage.py test --settings=testing_project.test_settings --tag=auth
+    # this is a cool performance improvement
+    @tag('auth')
     def test_profile_view_redirects_for_anonymous_users(self):
         response = self.client.get(reverse('profile'))
         # Check we get redirected to login page
         self.assertRedirects(response, f"{reverse('login')}?next={reverse('profile')}")
 
+    @tag('auth')
     def test_profile_view_accessible_for_authenticated_users(self):
         # Create test user
 
